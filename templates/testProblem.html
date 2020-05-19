@@ -1,0 +1,262 @@
+<!-- 
+    Author: Caroline Hoang
+    HTML for the Testing Question Page where a user can answer the question shown
+    [UI Design Final Project]  
+-->
+{% extends 'navbar.html' %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Lesson </title>
+
+        <!-- jquery -->
+        <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script> 
+        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script> 	 
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> 
+        <!-- bootstrap -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"> 
+
+        {% block jsFile %}
+        <!-- import the static js file -->
+        <!-- <script  type="text/javascript" src="{{ url_for('static', filename = 'create.js') }}" ></script> -->
+        <script  type="text/javascript" src="{{ url_for('static', filename = 'testProblem.js') }}" ></script>
+        {% endblock %}
+        <script>
+            var questButtons = {{questButtons|tojson}};
+            var questionJSON = {{questionJSON|tojson}};
+        </script>
+
+
+
+
+        {% block pageStyles %}
+        <style> 
+            body{
+                font-size: 1rem;
+            }
+            .header{
+                    width: 100%;
+                    /* height: 100%; */
+                    min-height: 4rem;
+                    height: 6vw;
+                    /* background-color: lightgrey; */
+                    font-size: 2.5rem;
+                    padding: 8vw 0 0vw 0vw;
+                    /* padding: calc(8vw + 5vw) 0 8vw 5vw; */
+                    font-weight: bold;
+            }
+            .hide{
+                display: none;
+            }
+            .show{
+                display: block;
+            }
+            .centeredContainer{
+                /* margin:auto; */
+                display:flex;
+                /* background-color: yellow; */
+                justify-content: center;
+            }
+            .vertlesson{
+                display:flex;
+                background-color: orange;
+                flex-direction: column;
+            }
+            .invisible{
+                visibility: hidden;
+            }
+            .visible{
+                visibility: visible;
+            }
+            .noteImg{
+                width: 100%;
+            }
+            .noteImgDesc{
+                width: 30%;
+            }
+            .lessonNav{
+                display: flex;
+                width: 15vw;
+                white-space: nowrap;
+                /* background-color: blue; */
+                /* float: right; */
+                /* height:20vw; */
+            }
+            #lastButton{
+                width:18%;
+                /* flex:1; */
+                /* justify-content: flex-end;
+                margin-right: 5vw; */
+            }
+            #nextButton{
+                width:18%;
+                /* flex:1; */
+                /* justify-content: flex-start;
+                margin-left: 4vw; */
+            }
+            .buttonHolder{
+                width:64%;
+                /* flex:9; */
+            }
+            #buttonContainer{
+                /* height:5vw; */
+                width:100vw;
+                /* background-color: purple; */
+            }
+            /* .goTest{
+                background-color:blue;
+                color: white;
+                font-weight: bold;
+            } */
+            .changeNote{
+                border: none;
+                background-color: transparent;
+                min-width: 3rem;
+                width: 15vw;
+            }
+            .changeNote:hover{
+                border-bottom: 1px dotted black;
+            }
+            .incorrect{
+                opacity: 50%;
+            }
+            .correct{
+                border: solid 3px rgb(32, 199, 32);
+                border-radius: 15px;
+                /* padding: 3px 0 3px 0; */
+                /* opacity: 80%;
+                background-color: rgb(37, 250, 37); */
+            }
+            #QNum{
+                font-size: 4rem;
+            }
+            .vertCenter{
+                display: flex;
+                align-items: center;
+            }
+            .vertBottom{
+                display: flex;
+                align-items: flex-end;
+            }
+            #qPrompt{
+                font-size: 2rem;
+            }
+            .prompt{
+                display:inline;
+                margin: 8vw 0 5vw 0;
+                border-bottom: solid 1px black;
+            }
+            /* .padTop{
+                padding-top:8vw;
+            } */
+            /* 
+            .padBottom{
+
+            } */
+            .validMsg{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .msgMargin{
+                margin: 2vw 0 0 0;
+            }
+            .bolded{
+                font-weight: bold;
+            }
+            .correctMsgColor{
+                color: rgb(32, 199, 32);
+                /* color: rgb(37, 250, 37); */
+                /* font-size: 2rem; */
+            }
+            .correctedMsgColor{
+                color: rgb(199, 140, 32);
+                /* color: rgb(37, 250, 37); */
+                /* font-size: 2rem; */
+            }
+            .incorrectMsgColor{
+                color: red;
+                /* font-size: 2rem; */
+            }
+            .msgTextSize{
+                font-size: 2rem;
+            }
+            .msgSubtextSize{
+                font-size: 1rem;
+            }
+            /* .nextButtonPadRight{
+                padding-right: ;
+            } */
+        </style>
+    </head>
+    {% endblock %}'
+
+    <body>
+        {% block pageContent %}
+        <div class="header" >
+        </div>
+        <div class="centeredContainer">
+            <div id="loaderBarContainer" class="bar shadow">
+                <div id="loaderBar" class="filling">
+                    <!-- <div class= "tooltips"> -->
+                        <div class="marker"></div>
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class= "centeredContainer">
+                <div class= "vertLesson"> 
+                    <!-- <div class= "centeredContainer "> <div class="prompt"><span id="QNum" ></span> <span id="qPrompt" >Which symbol represents a {{questionJSON["answerInfo"][0]}}?</span> </div></div> -->
+                    <div class= "centeredContainer "> <div class="prompt"><span id="QNum" ></span> <span id="qPrompt" >{{questionJSON["question"]}}</span> </div></div>
+                    <div id= "buttonContainer" class= "centeredContainer vertCenter">
+                        <div id="lastButton" class= "lessonNav" ></div>
+                        <!-- <a href="/lessons/lesson/note"> <button class= "" > &lt; Review Notes  </button></a> -->
+                        <div class="buttonHolder centeredContainer vertCenter">
+                            <button id="buttonOp0" class= "changeNote" link= "https://www.youtube.com/embed/z5dY91ppQak" noteIdx= 0 validAns= "{{questionJSON['validAns'][0]}}" ansType= "{{questionJSON['ansType']}}">
+                                <div class= "tooltips">
+                                    <img src= "{{questButtons[0][1]}}" class="noteImg" alt= "{{questButtons[0][0]}}"/>
+                            
+                                </div>
+                            </button>
+                            <button id="buttonOp1" class= "changeNote" link= "https://drive.google.com/file/d/1pm9d7xYFlo5rXx5lN7kVfc5VPuxM0iML/preview" noteIdx= 1 validAns= "{{questionJSON['validAns'][1]}}" ansType= "{{questionJSON['ansType']}}">
+                                <div class= "tooltips">
+                                    <img src= "{{questButtons[1][1]}}" class="noteImg" alt= "{{questButtons[1][0]}}" />
+                
+                                </div>
+                            </button>
+                            <button id="buttonOp2" class= "changeNote" link= "https://www.youtube.com/embed/z5dY91ppQak" noteIdx= 2 validAns= "{{questionJSON['validAns'][2]}}" ansType= "{{questionJSON['ansType']}}">
+                                <div class= "tooltips">
+                                    <img src= "{{questButtons[2][1]}}"  class="noteImg" alt= "{{questButtons[2][0]}}" />
+                    
+                                </div>
+                            </button>
+                            <button id="buttonOp3" class= "changeNote" link= "https://www.youtube.com/embed/z5dY91ppQak" noteIdx= 3 validAns= "{{questionJSON['validAns'][3]}}" ansType= "{{questionJSON['ansType']}}">
+                                <div class= "tooltips">
+                                    <img src= "{{questButtons[3][1]}}"  class="noteImg" alt= "{{questButtons[3][0]}}" />
+                
+                                </div>
+                            </button>
+                            <button id="buttonOp4" class= "changeNote lastNoteButton" link= "https://www.youtube.com/embed/z5dY91ppQak" noteIdx= 4 validAns= "{{questionJSON['validAns'][4]}}" ansType= "{{questionJSON['ansType']}}">
+                                <div class= "tooltips">
+                                    <img src= "{{questButtons[4][1]}}" class="noteImg" alt= "{{questButtons[4][0]}}" />
+                                
+                                </div>
+                            </button>
+                        </div>
+                        <!-- <div>sadfadf</div> -->
+                        <div id="nextButton" class= "lessonNav centeredContainer" ></div> <!-- nextButtonPadRight -->
+                    </div> 
+                    <div id= "validity" class= "centeredContainer validMsg msgMargin"> </div>
+                    <div id="readMore" class= "hide"><span class="greyFont">Read More about &nbsp; </span><a href="/{{questionJSON['answerInfo'][1]}}"  id="answerRM" class="correctMsgColor bolded">{{questionJSON["answerInfo"][0]}}s</a></div>
+                    <div id= "hintDiv" class= "centeredContainer"></div>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </body>
+
+</html>

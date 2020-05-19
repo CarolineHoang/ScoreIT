@@ -1,0 +1,107 @@
+[   
+    {
+        "question": "Which symbol represents a half note?",
+        "questionPartial": "Which symbol represents a",
+        "qType": "id",
+        "answerInfo": ["half note","lessons/1/note"],
+        "ansID": 1,
+        "ansType": "noteInfo",
+        "soundLink": "",
+        "answerIdx": 2,
+        "validAns": [0,0,1,0,0],
+        "options":  [4,9,1,6,3],
+        "uniqueHint":""
+    },
+    {
+        "question": "Which symbol represents a dotted eighth note?",
+        "questionPartial": "Which symbol represents a",
+        "qType": "id",
+        "answerInfo": ["dotted eighth note","lessons/2/dotted"],
+        "ansID": 12,
+        "ansType": "dotInfo",
+        "soundLink": "",
+        "answerIdx": 1,
+        "validAns": [0,1,0,0,0],
+        "options":  [5,12,8,15,13],
+        "uniqueHint":""
+    },
+    {
+        "question": "Which symbol represents a sixteenth rest?",
+        "questionPartial": "Which symbol represents a",
+        "qType": "id",
+        "answerInfo": ["sixteenth rest","lessons/4/rest"],
+        "ansID": 9,
+        "ansType": "restInfo",
+        "soundLink": "",
+        "answerIdx": 1,
+        "validAns": [0,1,0,0,0],
+        "options":  [17,9,3,8,7],
+        "uniqueHint":""
+    },
+    {
+        "question": "Which symbol represents a quarter rest?",
+        "questionPartial": "Which symbol represents a",
+        "qType": "id",
+        "answerInfo": ["quarter rest","lessons/2/rest"],
+        "ansID": 7,
+        "ansType": "restInfo",
+        "soundLink": "",
+        "answerIdx": 4,
+        "validAns": [0,0,0,0,1],
+        "options":  [5,10,2,4,7],
+        "uniqueHint":""
+    },
+    {
+        "question": "Which symbol lasts for 4 beats? ",
+        "questionPartial": "4 beats",
+        "qType": "length",
+        "answerInfo": ["whole note","lessons/0/note"],
+        "ansID": 0,
+        "ansType": "noteInfo",
+        "soundLink": "",
+        "answerIdx": 1,
+        "validAns": [0,1,0,0,0],
+        "options":  [3,0,4,7,1],
+        "uniqueHint":""
+    },
+    {
+        "question": "Which symbol lasts for 2 beats?",
+        "questionPartial": "2 beats",
+        "qType": "length",
+        "answerInfo": ["half rest","lessons/1/rest"],
+        "ansID": 6,
+        "ansType": "restInfo",
+        "soundLink": "",
+        "answerIdx": 4,
+        "validAns": [0,0,0,0,1],
+        "options":  [8,2,16,5,6],
+        "uniqueHint":""
+    },
+    {
+        "question": "Which symbol lasts for ¼ of a beat?",
+        "questionPartial": "¼ of a beat",
+        "qType": "length",
+        "answerInfo": ["sixteenth note","lessons/4/note"],
+        "ansID": 4,
+        "ansType": "noteInfo",
+        "soundLink": "",
+        "answerIdx": 3,
+        "validAns": [0,0,0,1,0],
+        "options":  [3,13,10,4,6],
+        "uniqueHint":""
+    },
+    {
+        "question": "Which symbol lasts for 4 beats?",
+        "questionPartial": "4 beats",
+        "qType": "length",
+        "answerInfo": ["whole rest","lessons/0/rest"],
+        "ansID": 2,
+        "ansType": "restInfo",
+        "soundLink": "",
+        "answerIdx": 2,
+        "validAns": [0,0,1,0,0],
+        "options":  [6,1,5,3,12],
+        "uniqueHint":""
+    }
+]
+

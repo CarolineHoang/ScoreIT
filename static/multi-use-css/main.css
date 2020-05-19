@@ -1,0 +1,113 @@
+/* --------- GLOBAL STYLES WITH MULTI-USE (IMPORTED IN navbar.html) --------- */
+/* Author: Caroline Hoang                                                     */
+
+/* global buttons ----------------------------------------------------------- */
+
+
+/* from lesson.html */
+.defButton{
+    display: inline-block;
+    height: 100%;
+    font-size: 1rem;
+    /* background-color:blueviolet; */
+    vertical-align: super; /*middle*/
+    vertical-align: -moz-middle-with-baseline;  /*this one is generally better but it's only on fire-fox */
+}
+.showDefButton{
+    width: 3vw;
+    height:3vw;
+    border-radius: 25px;
+    font-size: 1.3vw;
+    /* background-color:lightgray; */
+}
+.showMathButton{
+    width: 3vw;
+    height:3vw;
+    border-radius: 25px;
+    font-size: 1.3vw;
+    /* background-color:lightgray; */
+}
+    .showDefButton:hover{
+        background-color: lightgrey;
+        color: white;
+    }
+    .showMathButton:hover{
+        background-color: lightgrey;
+        color: white;
+    }
+.lastButton{
+    justify-content: flex-end;
+    margin-right: 5vw;
+}
+.nextButton{
+    justify-content: flex-start;
+    margin-left: 5vw;
+}
+.lessonNav{
+    display: flex;
+    width: 15vw;
+    white-space: nowrap;
+    height: 70%;
+    /* background-color: aqua; */
+    /* background-color: blue; */
+    /* float: right; */
+    /* height:20vw; */
+}
+.dirButton{
+    height: 100%;
+    border-radius: 8px;
+    background-color: white;
+    color: rgb(95, 95, 95);
+    /* color: orange; */
+}
+.dirButton:hover{
+    background-color: lightgrey;
+    /* color: white; */
+}
+.goTestButton{
+    background-color:#1f63e2 !important;
+    color: white !important;
+    font-weight: bold !important;
+}
+.goTestButton:hover{
+    background-color: #12377c !important;
+    color: white;
+}
+
+/* from lessondir.html */
+.greyNavButton{
+    /* background-color:blue; */
+    background-color:grey;
+    color: white;
+    font-weight: bold;
+    padding:1rem;
+    border: solid 1px;
+    border-radius: 15px;
+    max-width: 100%;
+    width: 15vw;
+    margin: 2vw 3rem 0 3rem;
+}
+    .greyNavButton:hover{
+        background-color: rgb(85, 85, 85)!important;
+    }
+
+
+/* Fonts -------------------------------------------------------------------- */
+/* from lesson.html */
+.greyFont{
+    color: grey;
+}
+.whiteFont{
+    color: white;
+}
+
+
+
+/* Font sizes --------------------------------------------------------------- */
+/* from lessondir.html */
+.font-large{
+    font-size: 4rem;
+}
+.font-medium{
+    font-size: 1rem;
+}

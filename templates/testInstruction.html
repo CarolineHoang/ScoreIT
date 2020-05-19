@@ -1,0 +1,127 @@
+<!-- 
+    Author: Caroline Hoang
+    HTML for the Test Instruction Page
+    When the user clicks the button, this automatically resets the score 
+    to zero and sends them to the first question
+    [UI Design Final Project]  
+-->
+{% extends 'navbar.html' %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Lesson </title>
+
+        <!-- jquery -->
+        <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script> 
+        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script> 	 
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> 
+        <!-- bootstrap -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"> 
+
+        {% block jsFile %}
+        <!-- import the static js file -->
+
+        <!-- in effect both this introduction page and the results page are both static pages that do the same thing with a similar button
+        and, right now, there is no id on the start button.
+        So, I'm putting the #retake id to it and importing the testResults.js file instead of the testInstruction.js -->
+        <!-- <script  type="text/javascript" src="{{ url_for('static', filename = 'testInstruction.js') }}" ></script> -->
+        <script  type="text/javascript" src="{{ url_for('static', filename = 'testResults.js') }}" ></script>
+        {% endblock %}
+
+
+        {% block pageStyles %}
+        <style> 
+            body{
+                font-size: 1rem;
+            }
+            .header{
+                    width: 100%;
+                    /* height: 100%; */
+                    min-height: 4rem;
+                    height: 6vw;
+                    /* background-color: lightgrey; */
+                    font-size: 2.5rem;
+                    padding: 6vw 0 0vw 0vw;
+                    /* padding: calc(8vw + 5vw) 0 8vw 5vw; */
+                    font-weight: bold;
+            }
+            .centeredContainer{
+                /* margin:auto; */
+                display:flex;
+                /* background-color: yellow; */
+                justify-content: center;
+            }
+            .vertlesson{
+                display:flex;
+                background-color: orange;
+                flex-direction: column;
+            }
+            /* #nextButton{
+                justify-content: center;
+            } */
+            .decoImg{
+                height:25vw;
+            }
+            /* .treble{
+                position: relative;
+                top: 0;
+                left: 0;
+            } */
+            /* .checkmark{
+                position: absolute;
+                top: 60px;
+                left: 80px;
+            } */
+            .font-large{
+                font-size: 4rem;
+            }
+            .font-medium{
+                font-size: 1rem;
+            }
+
+            .padBottom{
+                padding-bottom: 3vw;
+            }
+
+            /* override global styles */
+            .greyNavButton{
+                /* background-color: red !important; */
+                min-width: 12rem !important;
+            }
+        </style>
+    </head>
+    {% endblock %}'
+
+    <body>      
+        {% block pageContent %}
+        <div class="header" >
+        </div>
+        <div>
+            <div class= "centeredContainer">
+                <div class= "vertLesson"> 
+                    <div class= "centeredContainer font-large"> Test Your Skills! </div>
+                    <div class= "centeredContainer font-medium padBottom greyFont"> For each question, identify the correct symbol. </div>
+                    <div class= "centeredContainer padBottom" >
+                        <div>
+                            <img src="https://i.ibb.co/FJXBD0v/treble-check.png" class="decoImg" />
+                            <!-- <img src="https://i.pinimg.com/originals/53/cb/ac/53cbac82ad98843c7687a657e5160cef.png" class="decoImg treble" /> -->
+                            <!-- <img src="https://images.vexels.com/media/users/3/157890/isolated/lists/4f2c005416b7f48b3d6d09c5c6763d87-check-mark-circle-icon.png" class="checkmark" /> -->
+                        </div>
+                    </div>
+                    <div id= "buttonContainer" class= "centeredContainer">
+                        <!-- <div id="nextButton" class= "centeredContainer largeButton" ></div> -->
+                        <!-- <a href="/test/1">  -->
+                            <button id="retake" class= "greyNavButton" >  Start the Test! &gt;   </button>
+                        <!-- </a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </body>
+
+</html>

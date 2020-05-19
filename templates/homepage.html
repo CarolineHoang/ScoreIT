@@ -1,0 +1,94 @@
+<!-- 
+    Author: Caroline Hoang
+    HTML for the Homepage of ScoreIT
+    [UI Design Final Project]  
+-->
+
+{% extends 'navbar.html' %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Lesson </title>
+
+        <!-- jquery -->
+        <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script> 
+        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script> 	 
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> 
+        <!-- bootstrap -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"> 
+
+        {% block jsFile %}
+        <!-- import the static js file -->
+        {% endblock %}
+
+        {% block pageStyles %}
+        <style> 
+            body{
+                font-size: 1rem;
+                height: 100vh;
+            }
+            .header{
+                    width: 100%;
+                    /* height: 100%; */
+                    min-height: 4rem;
+                    height: 6vw;
+                    /* background-color: lightgrey; */
+                    font-size: 2.5rem;
+                    /* padding: 7vw 0 0vw 0vw; */
+                    /* padding: calc(8vw + 5vw) 0 8vw 5vw; */
+                    font-weight: bold;
+            }
+            .centeredContainer{
+                /* margin:auto; */
+                display:flex;
+                /* background-color: yellow; */
+                justify-content: center;
+            }
+            .vertlesson{
+                display:flex;
+                background-color: orange;
+                flex-direction: column;
+            }
+            /* #nextButton{
+                justify-content: center;
+            }
+             */
+            /* 
+            .largeButton{
+                font-size: 1.5rem;
+            } 
+            */
+            .decoImg{
+                height:30vw;
+            }
+            /* overriding global styles for min width */
+            .greyNavButton{
+                /* background-color: red !important; */
+                min-width: 12rem !important;
+            }
+        </style>
+    </head>
+    {% endblock %}
+    <body>
+        {% block pageContent %}
+        <div class="header" >
+        </div>
+        <div class= "centeredContainer "><!-- vertCenter -->
+            <div class= "vertLesson"> 
+                <div class= "centeredContainer font-large"> Let's ScoreIT! </div>
+                <div class= "centeredContainer font-medium greyFont"> New to music and want to learn basic musical notation in 4/4? </div>
+                <div class= "centeredContainer" >
+                    <img src="https://gatheringplacecs.org/wp-content/uploads/2019/03/musicical-notes.jpg" class="decoImg" />
+                </div>
+                <div id= "buttonContainer" class= "centeredContainer">
+                    <!-- <div id="nextButton" class= "centeredContainer largeButton" ></div> -->
+                    <a href="/lessons"> <button class= "greyNavButton" >  Start Learning! >  </button></a>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </body>
+</html>

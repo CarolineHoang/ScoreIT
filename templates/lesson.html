@@ -1,0 +1,369 @@
+<!-- 
+    Author: Caroline Hoang
+    HTML for the Lesson Page where a user can click notes to learn them
+    Upon clicking a note it will load an original example video (made by me) and information about the note
+    [UI Design Final Project]  
+-->
+
+{% extends 'navbar.html' %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Lesson </title>
+
+        <!-- jquery -->
+        <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script> 
+        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script> 	 
+
+        <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='progessBar.css') }}" > -->
+        <!-- <link rel="stylesheet" type="text/css" href="progessBar.css" > -->
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> 
+        <!-- bootstrap -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"> 
+
+        {% block jsFile %}
+        <!-- import the static js file -->
+        <script  type="text/javascript" src="{{ url_for('static', filename = 'lesson.js') }}" ></script>
+        {% endblock %}
+        <script>
+            var dataArray =  {{dataArray|tojson}}
+        </script>
+
+
+
+        {% block pageStyles %}
+        <style> 
+            body{
+                font-size: 1rem;
+                /* margin:auto;
+                width:90vw; */
+            }
+            .header{
+                width: 100%;
+                min-height: 4rem;
+                height: 6vw;
+                /* background-color: lightgrey; */
+                font-size: 2.5rem;
+                padding: 6vw 0 0 0;
+                font-weight: bold;
+            }
+        
+            .hide{
+                display: none;
+            }
+            .show{
+                display: inline-block;
+            }
+    
+            .centeredContainer{
+                /* margin:auto; */
+                display:flex;
+                /* background-color: yellow; */
+                justify-content: center;
+                width: 100%;
+            }
+            .vertlesson{
+                display:flex;
+                /* background-color: orange; */
+                flex-direction: column;
+            }
+            .description{
+                width:35vw;
+                margin-left:5vw;
+                padding: 0 2vw 0 2vw;
+                background-color: rgb(167, 167, 167);
+            }
+
+            .invisible{
+                visibility: hidden;
+            }
+            .visible{
+                visibility: visible;
+            }
+
+
+            .noteImg{
+                width: 100%;
+                border-radius: 8px;
+                background-color: white;
+                border: solid white 3px;
+            }
+
+            .activeNoteImgBorder{
+                border: solid #1f63e2 7px;
+            }
+
+            .noteImgDesc{
+                width: 30%;
+            }
+            .noteImgDescSmall{
+                width: 4rem;
+            }
+            #viewer{
+                width: 50vw;
+                height:30vw;
+            }
+
+
+            #buttonContainer{
+                height:5vw;
+                width:90vw;
+                background-color: rgb(167, 167, 167);
+                display: flex;
+                align-items: center;
+                margin-bottom: 2vw;
+            }
+            .changeNote{
+                border: none;
+                background-color: transparent;
+                width: 5vw;
+                margin: 0 .5vw;
+            }
+            .changeNoteMath{
+                border: none;
+                background-color: transparent;
+            }
+
+            /* TOOL TIPS STYLES */
+            .tooltips {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted black;
+            font-size: 1rem;
+            font-weight: normal;
+            }
+            /* specific to tooltips that don't only appear on hover: not used here */
+                .tooltips .tooltiptext-stay{ /*handle arrow*/
+                /* visibility: hidden; */
+                min-width: 140px;
+                background-color: #555;
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px 0;
+                position: absolute;
+                z-index: 1;
+                top: 125%; /* more positive = higher on the page */
+                left: 50%;
+                margin-left: -70px; /* neg half of min-width */
+                /* opacity: 0; */
+                transition: opacity 0.3s;
+                }
+            /* specific to tooltips that sit above what it points at: */
+                .tooltips .tooltiptext-top {
+                visibility: hidden;
+                min-width: 140px;
+                /* padding: 0 6px 0 6px; */
+                background-color: #555;
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px 3px;  /* <top&bottom> <right&left> */
+                position: absolute;
+                z-index: 1;
+                bottom: 125%; /* more positive = higher on the page */
+                left: 50%;
+                margin-left: -70px; /* neg half of min-width */
+                opacity: 0;
+                transition: opacity 0.3s;
+                }
+                .tooltips .tooltiptext-top::after { /*handle arrow*/
+                content: "";
+                position: absolute;
+                top: 100%; /* Triangle positioned at the bottom of the tooltip */
+                left: 50%;
+                margin-left: -5px; 
+                border-width: 5px;
+                border-style: solid;
+                border-color: #555 transparent transparent transparent;   /*     <color>  transparent transparent transparent  : make a triangle that points down   v     */
+                }
+                .tooltips:hover .tooltiptext-top {
+                visibility: visible;
+                opacity: 1;
+                }   
+            /* specific to tooltips that sit below what it points at: */
+                .tooltips .tooltiptext-bottom {
+                visibility: hidden;
+                width: 120px;
+                background-color: #555;
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px 0;
+                position: absolute;
+                z-index: 1;
+                top:125%; /*must be top so that we don't move the arrow down as well */
+                /*bottom: -125%;*/  /* more negative = lower on the page */
+                left: 50%;
+                margin-left: -60px;
+                opacity: 0;
+                transition: opacity 0.3s;
+                }
+                .tooltips .tooltiptext-bottom::after {  /*handle arrow*/
+                content: "";
+                position: absolute;
+                bottom: 100%; /* Triangle positioned at the top of the tooltip : ^ */
+                left: 50%;
+                margin-left: -5px;
+                border-width: 5px;
+                border-style: solid;
+                border-color:  transparent transparent #555 transparent;  /*     transparent transparent  <color>  transparent  : make a triangle that points up   ^     */
+                }
+                .tooltips:hover .tooltiptext-bottom {
+                visibility: visible;
+                opacity: 1;
+                }   
+
+            .vertCenterFD-row{
+                display:flex;
+                align-items: center;
+            }
+            .vertCenterFD-column{
+                display:flex;
+                flex-direction: column;
+                justify-content: center;
+                /* align-items: center; */
+                height: 70vh;
+            }
+
+            .directions{
+                margin: 1vw 0 5vw 0;
+            }
+
+            .qPrompt{
+                font-size: 2rem;
+            }
+            .prompt{
+                display:inline;
+                padding: 2vw 0 0 0;
+                margin: 0 0 2vw 0;
+                /* height: 4vw; */
+                /* background-color: aquamarine; */
+            }
+
+            .textCenter{
+                text-align: center;
+            }
+
+            .noteDefName{
+                font-size: 2.2rem;
+                border-bottom: solid 1px black;
+                margin: 2vw 0 2vw 0; 
+            }
+            .noteNumVal{
+                font-size: 1.8rem;
+                font-weight: bold;
+                margin: 0 0 2vw 0;
+            }
+            .inlineBlock{
+                display: inline-block;
+            }
+            .mathFontSize{
+                font-size: 2.3rem;
+            }
+        </style>
+        {% block loaderStyles %}{% endblock %}
+        {% endblock %}
+    </head>
+
+    <body> 
+        {% block pageContent %}
+        <div class="header" >
+        </div>
+        
+        <div class="centeredContainer">
+            <div id="loaderBarContainer" class="bar shadow">
+                <div id="loaderBar" class="filling">
+                        <div class="marker"></div>
+                </div>
+            </div>
+        </div>
+        {% block barHTMLContent %}{% endblock %}
+        <div class= "centeredContainer">
+            <div id="contentContainer" class= "vertLesson vertCenterFD-column"> 
+                <div class= "centeredContainer "> 
+                    <div class="prompt">
+                        <span id="noteTitle" class="font-large"></span>
+                        <div class= "defButton" >
+                            <button id="showDef" class="showDefButton greyFont">?</button> 
+                        </div> 
+                        <span id="noteDef" class= "hide qPrompt" ></span> 
+                    </div>
+                </div>
+                
+                <div class= "centeredContainer directions greyFont"> Click a symbol to learn about it!</div>
+
+                <div id= "buttonContainer" class= "centeredContainer">
+
+                    <div id="lastButton" class= "lastButton lessonNav" ></div>
+
+                    <button id="buttonOp0" class= "changeNote" link= "{{dataArray[0][2]}}?&autoplay=1&modestbranding=1&rel=0" noteIdx= 0>
+                        <div class= "tooltips">
+                            <img src= "{{dataArray[0][1]}}" class="noteImg" alt= "{{dataArray[0][0]}}"/>
+                            <span class="tooltiptext-top">{{dataArray[0][0]}}</span>
+                        </div>
+                    </button>
+                    <button id="buttonOp1" class= "changeNote" link= "{{dataArray[1][2]}}?&autoplay=1&modestbranding=1&rel=0" noteIdx= 1>
+                        <div class= "tooltips">
+                            <img src= "{{dataArray[1][1]}}" class="noteImg" alt= "{{dataArray[1][0]}}" />
+                            <span class="tooltiptext-top">{{dataArray[1][0]}}</span>
+                        </div>
+                    </button>
+                    <button id="buttonOp2" class= "changeNote" link= "{{dataArray[2][2]}}?&autoplay=1&modestbranding=1&rel=0" noteIdx= 2>
+                        <div class= "tooltips">
+                            <img src= "{{dataArray[2][1]}}"  class="noteImg" alt= "{{dataArray[2][0]}}" />
+                            <span class="tooltiptext-top">{{dataArray[2][0]}}</span>
+                        </div>
+                    </button>
+                    <button id="buttonOp3" class= "changeNote" link= "{{dataArray[3][2]}}?&autoplay=1&modestbranding=1&rel=0" noteIdx= 3>
+                        <div class= "tooltips">
+                            <img src= "{{dataArray[3][1]}}"  class="noteImg" alt= "{{dataArray[3][0]}}" />
+                            <span class="tooltiptext-top">{{dataArray[3][0]}}</span>
+                        </div>
+                    </button>
+                    <button id="buttonOp4" class= "changeNote" link= "{{dataArray[4][2]}}?&autoplay=1&modestbranding=1&rel=0" noteIdx= 4>
+                        <div class= "tooltips">
+                            <img src= "{{dataArray[4][1]}}" class="noteImg" alt= "{{dataArray[4][0]}}" />
+                            <span class="tooltiptext-top">{{dataArray[4][0]}}</span>
+                        </div>
+                    </button>
+                    <button id="buttonOp5" class= "changeNote dottedButton" link= "{{dataArray[5][2]}}?&autoplay=1&modestbranding=1&rel=0" noteIdx= 5>
+                        <div class= "tooltips">
+                            <img src= "{{dataArray[5][1]}}" class="noteImg" alt= "{{dataArray[6][0]}}"/>
+                            <span class="tooltiptext-top">{{dataArray[5][0]}}</span>
+                        </div>
+                    </button>
+                    <button id="buttonOp6"  class= "changeNote dottedButton" link= "{{dataArray[6][2]}}?&autoplay=1&modestbranding=1&rel=0" noteIdx= 6>
+                        <div class= "tooltips">
+                            <img src= "{{dataArray[6][1]}}" class="noteImg" alt= "{{dataArray[6][0]}}" />
+                            <span class="tooltiptext-top">{{dataArray[6][0]}}</span>
+                        </div>
+                    </button>
+                    <button id="buttonOp7"  class= "changeNote dottedButton" link= "{{dataArray[7][2]}}?&autoplay=1&modestbranding=1&rel=0" noteIdx= 7>
+                        <div class= "tooltips">
+                            <img src= "{{dataArray[7][1]}}" class="noteImg" alt= "{{dataArray[7][0]}}" />
+                            <span class="tooltiptext-top">{{dataArray[7][0]}}</span>
+                        </div>
+                    </button>
+                    <div id="nextButton" class= "nextButton lessonNav" ></div>
+                </div>
+                <div id= "videoContainer" class= "hide">
+                    <iframe id= "viewer" class= "invisible" src="" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <div id="infoContainer" class= "description hide">
+                        <div>
+                            <div id="nName" class="centeredContainer"> {{currentNote}}</div>
+                            <div id="nNameImg" class="centeredContainer"> {{currentNote}}</div>
+                            <div id="nMath" ></div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </body>
+</html>

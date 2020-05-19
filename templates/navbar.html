@@ -1,0 +1,319 @@
+<!-- 
+    Author: Caroline Hoang
+    Simple Bootstrap Navbar
+
+    This navbar is the base of the template structure.
+
+    [UI Design Final Project]  
+-->
+<!--    Note to self: all css files must be imported here because all 
+        the html templates feed (using jinja flask % tags) here         -->
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>ScoreIT!</title>
+
+        <!-- bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> 
+        <!-- jquery -->
+        <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script> 
+        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script> 	 
+
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> 
+
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='multi-use-css/progessBar.css') }}" > 
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='multi-use-css/main.css') }}" > 
+        <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+        <script  type="text/javascript" src="{{ url_for('static', filename = 'navbar.js') }}" ></script>
+        {% block jsFile %}{% endblock %}
+        {% block pJsFile %}{% endblock %}
+        <style>
+            .inlineDisplay{
+                display: inline-block; /*to show the search box with form width and have the search button inline with it dispite outside the form div (so that it won't randomly submit the page)*/
+            }
+            .searchBar{
+                width: 20vw;
+            }
+            .stickyNav{
+                /* display: flex; */
+                position:fixed;
+                z-index: 50;
+                /* width:100vw; */
+                /* height: 4rem; */
+                flex-direction: column;
+                /* padding-bottom: .5rem; */
+                justify-content: center;
+                /* align-items: center; */
+            }
+            .navbar{
+                /* padding: .5rem 2vw; */
+                padding: .5rem 2vw !important;  /* overrriding default bootstrap behavior*/
+            }
+            .navOptions{
+                display: flex;
+                flex-direction: row;
+                justify-content: space-evenly;
+                width: 96vw;
+                /* width: 96vw; */
+                /* width:calc(100vw - 4rem); */
+                
+                /* padding-left: 1vw;
+                padding-right: 1vw; */
+            }
+            .navSettings{
+                height: 6vw;
+            }
+            .n_hide-editing-buttons{
+                display: none;
+            }
+            .n_show-editing-buttons{
+                display: inline-block;
+            }
+
+
+
+            .fixed{
+                /* top:6vw; */
+                /* margin-top:0; */
+                left:0;
+                /* display: block; */
+                /* flex-basis: 100%; */
+                width:100vw !important;
+                /* height: 0; */
+                /* position: fixed; */
+            }
+            .change-button-container{
+                width:100vw;
+                /* height: 3vw; */
+                margin-top: 1vw;
+                padding-top: 1vw;
+                padding-bottom: 1vw;
+                padding-right:1vw;
+                background-color: rgba(128, 128, 128, 0.212);
+                justify-content: flex-end;
+                z-index: 50;
+
+            }
+            .change-buttons{
+                float:right;
+                margin-left: .5rem;
+            }
+            #update-entry{
+                font-weight: bold;
+            }
+            #discard-changes{
+                color:grey;
+            }
+            .collapse.show{
+                display: block;
+
+                visibility: visible;
+                height: 100%;
+
+                /* height: 2.5rem; */
+            }
+            .show{
+                visibility: visible;
+                display: block;
+            }
+            .collapse{
+                display: block;
+                visibility: hidden;
+                height: 2.5rem;
+            }
+
+
+            /* .navbar-collapse.navbar-nav{
+                background-color: brown;
+            }  */
+            .mobile-lesson-toggle{
+                display: inline-block;
+            }
+            .desktop-lesson-toggle{
+                display:none;
+            }
+
+            /* 
+                    .navbar-light .navbar-nav .nav-link {
+                color: rgba(0,0,0,.5);
+            } */
+            /* .show > .nav-link {
+                color: rgba(0,0,0,.9);
+            } */
+            /* .show > .nav-link {
+                color: #1f63e2;
+            } */
+            .navSettings-togger{
+                max-height: calc(4rem - 2vw - .5rem );  /* stickyNav height - navbar TOP padding - nav-link TOP padding */
+                padding: 0 .75rem;
+                /* margin-right: 2rem; */
+            }
+            .navbar-nav{
+                    /* background-color: brown; */
+                    margin-top: calc(4rem - (2 * .5rem));
+                    /* margin-top: 4rem; */
+                } 
+            .allLessons{
+                /* color:lightgrey; */
+                /* color:#e9ecef; */
+                color: rgba(0,0,0,.5);
+            }
+
+            @media screen and (min-width: 992px){/*768px){*/
+
+                .stickyNav{
+                            display: flex;
+                            position:fixed;
+                            z-index: 50;
+                            /* width:100vw; */
+                            height: 4rem;   /*defining an exact vertical height for the base navbar */
+                            flex-direction: column;
+                            /* padding-bottom: .5rem; */
+                            justify-content: center;
+                            /* align-items: center; */
+                }
+                .navbar{
+                    padding: .5rem 1rem;
+                }
+                .navbar-brand {
+                    /* display: inline-block; */
+                    display: flex;
+                    align-items: center;
+                    padding: 0 0; 
+                    /* padding: .5rem 0; */
+                    /* padding-top: .3125rem;
+                    padding-bottom: .3125rem; */
+                    margin-right: 1rem;
+                    font-size: 1.25rem;
+                    line-height: inherit;
+                    white-space: nowrap;
+                }
+                .nav-link{
+                    /* display: block; */
+                    /* padding: .5rem 1rem; */
+                    display:flex;
+                    align-items: center;
+                    padding: 0 0;
+                    /* if you want to change the left and right padding of the navbar items, you must do this because there are two levels (padding and lef/right padding to go through and the left/right can't bec changed without important or lower level override)*/
+                    /* padding-left: 0 !important;
+                    padding-right: 0 !important; */
+                }
+                    /* .nav-link:first-child {
+                        padding-top:0;
+                        background-color: aquamarine;
+                    } */
+                .navbar-nav{
+                    /* background-color: brown; */
+                    margin-top: 0;
+                    /* margin-top: 4rem; */
+                } 
+                .mobile-lesson-toggle{
+                    display: none;
+                }
+                .desktop-lesson-toggle{
+                    display: inline-block;
+                }
+                .collapse{
+                        display: block;
+                        visibility: visible;
+                        height: 2.5rem;
+                    }
+            
+                .dropdown:hover .dropdown-menu, .btn-group:hover .dropdown-menu{
+                    display: block;
+                }
+                /* .dropdown:hover{
+                    text-decoration: none;
+                } */
+                .dropdown-menu{
+                    margin-top: 0;
+                }
+                .dropdown-toggle{
+                    margin-bottom: 2px;
+                }
+                .navbar .dropdown-toggle, .nav-tabs .dropdown-toggle{
+                    margin-bottom: 0;
+                }
+                .linkStyle:hover{
+                    text-decoration: none;
+                }
+                .activeColor{
+                    color: blue;
+                }
+                .allLessons{
+                    display: none;
+                }
+            }
+        </style>
+        {% block pageStyles %}{% endblock %}
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light stickyNav">
+            <div class="navOptions">
+                
+                <a class="navbar-brand" href="/"><div>ScoreIT</div></a>
+                <!-- <button class="navbar-toggler navSettings" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button> -->
+            
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- <div class=>hello</div> -->
+                    <!-- <div class="dropdown-divider"></div> -->
+                    <ul class="navbar-nav mr-auto">
+                        <div class="dropdown-divider"></div>
+                        <li class="nav-item ">
+                        <a id="nav1" class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <!-- <li class="nav-item">
+                        <a class="nav-link" href="/create">Create</a>
+                        </li> -->
+
+                        
+                        <li class="nav-item dropdown">
+                            <!-- this link currently doesn't go anywhere -->
+                        <a href="/lessons" class= "linkStyle desktop-lesson-toggle">
+                            <div id="nav2" class="nav-link dropdown-toggle"  >
+                                Lessons
+                            </div>
+                        </a>
+                        <div class="nav-link dropdown-toggle mobile-lesson-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" >
+                            Lessons
+                        </div>
+                        
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/lessons/lesson/note">Types of Notes</a>
+                            <a class="dropdown-item" href="/lessons/lesson/rest">Rests</a>
+                            <a class="dropdown-item" href="/lessons/lesson/dotted">Dotted Notes</a>
+                            <div class="dropdown-divider allLessons"></div>
+                            <a class="dropdown-item allLessons" href="/lessons">See All Lessons</a>
+                            <!-- <a class="dropdown-item" href="#">Ear Training</a> -->
+
+                            <!-- <div class="dropdown-divider"></div> -->
+                            <!-- <a class="dropdown-item" href="#">Something else here</a> -->
+                        </div>
+                        </li>
+                        <li class="nav-item">
+                            <a id="nav3" class="nav-link" href="/test">Test Yourself!</a>
+                        </li>
+                        <!-- <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Disabled</a>
+                        </li> -->
+                    </ul>
+                </div>
+                <button class="navbar-toggler navSettings-togger" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </nav>
+        {% block pageContent %}{% endblock %}
+    </body>
+</html>
